@@ -15,16 +15,16 @@ time: ~2h (qua nhiều block lab)
 | Mã học viên | 2A202600372 |
 | Track number | 2 |
 | Tên track | Trợ lý đặt vé và chăm sóc khách hàng hàng không |
-| Vì sao chọn track này? | Workflow này rất gần sản phẩm thật, user dễ xem AI là kênh chính thức của hãng, và lỗi có thể gây mất tiền/mất quyền lợi ngay lập tức. |
+| Vì sao chọn track này? | Em từng gặp tình huống chuyến bay đổi giờ sát ngày và phải tự mò quy định đổi vé/hành lý nên thấy workflow này rất thật. User cũng dễ xem AI là kênh chính thức của hãng, nên nếu AI sai thì có thể gây mất tiền/mất quyền lợi ngay lập tức. |
 
 ## 2. Scenario — bound use case
 
 | Trường | Nội dung |
 |---|---|
 | **System / workflow** — AI làm gì cụ thể? AI KHÔNG được làm gì? | AI assistant trong app/website chính thức của hãng hỗ trợ tra cứu quy định hành lý, điều kiện đổi/hoàn vé, và hướng dẫn bước xử lý khi chuyến bay bị delay. AI KHÔNG có quyền phê duyệt hoàn tiền, cam kết bồi thường, hay xác nhận quyền lợi pháp lý cuối cùng thay nhân viên hãng. |
-| **User** — ai dùng trực tiếp? Role/background/giai đoạn của họ là gì? | Hành khách bay nội địa/quốc tế (bao gồm người ít kinh nghiệm bay), thường đang ở giai đoạn sắp thanh toán vé, chuẩn bị check-in, hoặc cần xử lý thay đổi chuyến gấp. |
+| **User** — ai dùng trực tiếp? Role/background/giai đoạn của họ là gì? | Hành khách bay nội địa/quốc tế (bao gồm người ít kinh nghiệm bay, như em ở những chuyến đầu), thường đang ở giai đoạn sắp thanh toán vé, chuẩn bị check-in, hoặc cần xử lý thay đổi chuyến gấp. |
 | **Context** — dùng ở đâu, lúc nào, qua kênh nào? | Dùng trong app/website chính thức ở các trang đặt vé, quản lý chuyến bay, đổi vé/hoàn tiền, đặc biệt trong tình huống căng thẳng như delay/cancel sát giờ bay. |
-| **Real-work consequence** — nếu AI sai thì ai mất gì? | Nếu AI trả sai quy định hoặc hứa sai quyền lợi, hành khách có thể mua thêm dịch vụ không cần thiết, bỏ lỡ cửa sổ đổi/hoàn vé, mất tiền, lỡ chuyến nối, và phát sinh tranh chấp với hãng. |
+| **Real-work consequence** — nếu AI sai thì ai mất gì? | Nếu AI trả sai quy định hoặc hứa sai quyền lợi, hành khách có thể mua thêm dịch vụ không cần thiết, bỏ lỡ cửa sổ đổi/hoàn vé, mất tiền, lỡ chuyến nối, và phát sinh tranh chấp với hãng. Đây là rủi ro em từng thấy rất dễ xảy ra khi người dùng đang gấp và chỉ dựa vào một câu trả lời nhanh. |
 
 ## 3. Failure candidates + layer mapping
 
@@ -32,7 +32,7 @@ time: ~2h (qua nhiều block lab)
 |---|---|---|---|---|---|---|---|
 | C1 | Hallucination | User hỏi quyền hành lý của vé codeshare/hạng vé cụ thể, nhưng knowledge base thiếu policy mới nhất | AI khẳng định sai: "Vé của bạn đã gồm 23kg ký gửi" dù thực tế không gồm | High | Input | UI | RAG thiếu policy cập nhật theo route/hạng vé; UI trong app chính thức làm user tin câu trả lời là cam kết của hãng |
 | C2 | Escalation failure | Chuyến bay delay qua đêm, user có nhu cầu khẩn (trẻ nhỏ, thuốc men, nối chuyến) | AI chỉ trả lời chung chung "bạn vui lòng chờ thông báo" thay vì chuyển nhân viên/hotline ngay | Critical | Human review | Model | Workflow thiếu trigger escalation theo mức độ khẩn; model mặc định trả lời an toàn chung nên bỏ lỡ case cần người thật xử lý |
-| C3 | Sycophancy | User gây áp lực: "xác nhận giúp tôi để tôi ra sân bay luôn" về giấy tờ/hành lý | AI chiều user và xác nhận điều kiện boarding khi không đủ dữ liệu | High | Model | Human review | Model ưu tiên làm hài lòng user khi bị pressure; thiếu chốt kiểm từ agent trước khi đưa khẳng định có tính quyết định hành trình |
+| C3 | Sycophancy | User gây áp lực: "xác nhận giúp tôi để tôi ra sân bay luôn" về giấy tờ/hành lý | AI chiều user và xác nhận điều kiện boarding khi không đủ dữ liệu | Medium | Model | Human review | Đây là lỗi thường gặp khi bị pressure nhưng đa số vẫn còn cơ hội sửa trước giờ bay nếu user kiểm tra lại với hãng; mức ảnh hưởng thường thấp hơn case escalation khẩn |
 
 ## 4. Primary failure deep dive
 
@@ -56,13 +56,20 @@ time: ~2h (qua nhiều block lab)
 
 | Lens | Nội dung |
 |---|---|
-| **Direct user** — người dùng trực tiếp AI là ai? Họ thấy gì? | Hành khách đang bị gián đoạn chuyến bay, thường căng thẳng và cần quyết định nhanh. Họ thấy AI trong app chính thức nên dễ tin đây là hướng dẫn có thể hành động ngay. |
+| **Direct user** — người dùng trực tiếp AI là ai? Họ thấy gì? | Hành khách đang bị gián đoạn chuyến bay, thường căng thẳng và cần quyết định nhanh. Từ trải nghiệm cá nhân khi bị đổi giờ bay, em thấy lúc đó rất dễ tin vào câu trả lời đầu tiên trong app chính thức và hành động ngay. |
 | **Affected person** — ai bị ảnh hưởng khi AI sai dù không tự dùng AI? | Người đi cùng (trẻ nhỏ, người cao tuổi, người cần chăm sóc y tế), đối tác/chủ sử dụng lao động chờ hành khách ở điểm đến, và nhân viên sân bay phải xử lý hệ quả phát sinh khi user nhận hướng dẫn sai. |
 | **Hidden harm** — nếu workflow scale lên nhiều người dùng, hệ quả dài hạn là gì? | Nếu escalation failure lặp lại ở quy mô lớn, khiếu nại tăng mạnh, đội CSKH quá tải giờ disruption, chi phí bồi thường/hoàn vé tăng, và niềm tin vào kênh hỗ trợ số của hãng suy giảm dài hạn. |
 | **Case eval naïve sẽ miss** — case rơi giữa category, dễ bị test set thường bỏ sót | User không dùng từ khóa "khẩn cấp" rõ ràng nhưng mô tả tình huống rủi ro cao bằng ngôn ngữ đời thường ("bé sốt", "sắp hết thuốc", "còn 2 tiếng là nối chuyến quốc tế"). Test set chỉ dùng câu textbook sẽ dễ miss. |
+
+## AI Critique
+
+- Em tự chốt phạm vi bài theo một failure chính (escalation failure) vì phù hợp nhất với trải nghiệm quan sát thực tế ở bối cảnh delay chuyến.
+- Em tự viết lại trigger thành các tín hiệu khẩn cụ thể (delay qua đêm, trẻ nhỏ, thuốc men, nối chuyến) để tránh mô tả chung chung.
+- Em tự rà lại layer mapping và giữ Human review là layer chính để phản ánh đúng điểm nghẽn trong workflow.
+- AI chỉ hỗ trợ phản biện ngắn về độ rõ ràng câu chữ; phần quyết định nội dung và chỉnh sửa cuối cùng do em thực hiện.
 
 ## Note dùng AI nếu có
 
 | Tool | Prompt ngắn | Bạn đã sửa gì sau khi AI generate? |
 |---|---|---|
-| Claude Code | Draft risk map cho Track 2, focus escalation failure | Chuẩn hóa trigger/bad behavior thành câu quote-able và đồng bộ layer mapping với testability. |
+| Claude Code | Rà nhanh độ rõ ràng của bản nháp Risk Map Track 2 | Em tự xây toàn bộ nội dung chính; AI chỉ hỗ trợ kiểm tra câu chữ, còn trigger/layer/harm map và phiên bản cuối do em tự chỉnh. |
