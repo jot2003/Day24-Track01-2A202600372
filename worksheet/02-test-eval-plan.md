@@ -97,13 +97,13 @@ Template:
 Tôi đang viết Safety Question cho Day 24.
 
 Scenario:
-[paste Scenario từ file 1]
+Scenario ở file 1, Section 2 (đã điền).
 
 Primary failure:
-[paste Failure pattern sentence]
+Failure pattern sentence ở file 1, Section 4 (đã điền).
 
 Harm Map:
-[paste Harm Map]
+Harm Map ở file 1, Section 5 (đã điền).
 
 Hãy đưa 3 option Safety Question:
 - Option A: hẹp nhất, tập trung direct user
@@ -117,7 +117,7 @@ Mỗi option chỉ 1 câu. Sau đó critique option nào testable nhất với 5
 
 ```text
 Đây là Safety Question của tôi:
-[paste question]
+Safety Question ở Section 1 (đã điền).
 
 Hãy critique:
 1. Có đủ 5 thành phần không?
@@ -169,13 +169,13 @@ Viết 5 test case. Mỗi case nên là câu user thật có thể hỏi, không
 
 ```text
 Tôi đang viết Test Set cho Safety Question sau:
-[paste Safety Question]
+Safety Question ở Section 1 (đã điền).
 
 Primary failure:
-[paste primary failure deep dive]
+Primary failure deep dive ở file 1, Section 4 (đã điền).
 
 Case eval naïve sẽ miss:
-[paste từ Harm Map]
+Case eval naïve sẽ miss ở file 1, Section 5 (đã điền).
 
 Hãy đề xuất 5 test cases:
 - T1 Normal
@@ -200,7 +200,7 @@ Yêu cầu:
 
 ```text
 Đây là test set của tôi:
-[paste table]
+Bảng test set ở Section 2 (đã điền).
 
 Hãy critique:
 1. 5 cases có đủ 5 type không?
@@ -292,10 +292,10 @@ Viết ít nhất 3 giới hạn thật của test set.
 
 ```text
 Tôi đang viết Eval Plan cho test set sau:
-[paste Test Set]
+Test Set ở Section 2 (đã điền).
 
 Primary failure:
-[paste Failure pattern sentence]
+Failure pattern sentence ở file 1, Section 4 (đã điền).
 
 Hãy draft:
 - Pass nếu: 3 criteria cụ thể
@@ -315,7 +315,7 @@ Yêu cầu:
 
 ```text
 Đây là Eval Plan của tôi:
-[paste Eval Plan]
+Eval Plan ở Section 3 (đã điền).
 
 Hãy critique:
 1. Pass criteria có quá vague không?

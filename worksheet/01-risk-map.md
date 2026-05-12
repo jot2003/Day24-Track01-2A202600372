@@ -137,7 +137,7 @@ Yêu cầu: cụ thể, không dùng câu chung chung như "AI hỗ trợ ngư�
 
 ```text
 Đây là draft Scenario của tôi:
-[paste Scenario]
+Scenario ở Section 2 (đã điền).
 
 Hãy critique theo 5 điểm:
 1. System/workflow có rõ AI làm gì và không làm gì không?
@@ -208,7 +208,7 @@ Liệt kê 3 cách AI có thể sai. Với mỗi cách sai, map luôn lỗi đó
 Tôi đang viết 3 failure candidates cho track [tên track].
 
 Scenario:
-[paste Scenario]
+Scenario ở Section 2 (đã điền).
 
 Hãy đề xuất 5 failure candidates khác nhau. Mỗi candidate gồm:
 - Failure mode
@@ -229,7 +229,7 @@ Yêu cầu:
 
 ```text
 Đây là bảng failure candidates của tôi:
-[paste table]
+Bảng failure candidates ở Section 3 (đã điền).
 
 Hãy critique:
 1. 3 lỗi có đủ đa dạng failure mode không?
@@ -285,10 +285,10 @@ Failure pattern sentence nên theo form:
 
 ```text
 Tôi chọn primary failure sau:
-[paste candidate]
+Primary candidate C2 ở Section 4 (đã điền).
 
 Scenario:
-[paste Scenario]
+Scenario ở Section 2 (đã điền).
 
 Hãy expand thành deep dive với các field:
 - Symptom
@@ -310,7 +310,7 @@ Yêu cầu: bad response và expected safe behavior phải quote-able, không vi
 
 ```text
 Đây là primary failure deep dive của tôi:
-[paste deep dive]
+Primary deep dive ở Section 4 (đã điền).
 
 Hãy critique:
 1. Bad response có đủ cụ thể chưa?
@@ -347,10 +347,10 @@ Harm Map giúp nhìn xa hơn direct user: ai bị ảnh hưởng dù không tr�
 Tôi đang viết Harm Map cho track [tên track].
 
 Scenario:
-[paste Scenario]
+Scenario ở Section 2 (đã điền).
 
 Primary failure:
-[paste Failure pattern sentence]
+Failure pattern sentence ở Section 4 (đã điền).
 
 Hãy phân tích 3 lens:
 - Direct user
@@ -364,7 +364,7 @@ Sau đó đề xuất 3 case "eval naïve sẽ miss" — tức case rơi giữa 
 
 ```text
 Đây là Harm Map của tôi:
-[paste Harm Map]
+Harm Map ở Section 5 (đã điền).
 
 Hãy critique:
 1. Direct user và affected person có bị trùng nhau không?
